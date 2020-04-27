@@ -1,0 +1,9 @@
+Flask
+Flask-Session
+psycopg2-binary
+SQLAlchemy
+
+Goodreads API:
+
+key: 9GUF2T1jJgHkJKcFYsnkg
+secret: iYN6bbKpDETDQwbbR9F4fUkT3uNYP0CrVknxSbD3Q
