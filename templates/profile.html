@@ -1,0 +1,117 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+
+{% block head %}
+	{{super() }}
+	<style type="text/css">
+		.text-center{
+			margin-top: 15px;
+			margin-bottom:30px;
+			
+		}
+		.btn{
+			width: 30%;
+		}
+
+		table {
+			counter-reset: tableCount;     
+		}
+		.counterCell:before {              
+			content: counter(tableCount); 
+			counter-increment: tableCount; 
+		}
+
+	</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{url_for('profile')}}">Home <span class="sr-only">(current)</span></a>
+      </li>
+     <li class="nav-item">
+      <a class="nav-item nav-link" href="{{url_for('signout')}}">Logout</a>
+  	</li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+	<h1>Welcome {{g.user.name}} </h1>
+	
+	<div class="row d-flex justify-content-center">
+	<div class="col-md-12">	
+	  <form action="{{url_for('books')}}" method="get">
+  
+    	<input class="form-control"  value="{{ request.args.get('search') }}" type="text" placeholder="Search" name="search" aria-label="Search">
+   		<div class="text-center">
+    		<button class="btn btn-outline-success my-2 my-sm-0" data-disable-with="Search" type="submit">Search</button>  
+    	</div>
+     
+	  </form>
+	</div>
+
+	<div class="col-md-12">
+	<table class="table table-hover">
+	  <thead>
+	    <tr>
+	      <th scope="col">#</th>
+	      <th scope="col">ISBN</th>
+	      <th scope="col">Title</th>
+	      <th scope="col">Author</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+
+	    {% if search_msg %}
+	    	<tr>
+				<td>
+					<div class="col alert alert-danger" role="alert">
+						<strong>No Record is found</strong>			
+					</div>
+				</td>
+			</tr>
+		{% else %}
+	    
+		    {% for book in books %}
+				<tr>
+					<th class="counterCell"></th>
+					<td>
+						<a href="{{ url_for('book', book_id = book.book_id) }}" >
+		                    {{ book.isbn }} 
+		                </a>
+		            </td>
+		            <td>
+						{{ book.title }}                
+		            </td>
+		            <td>
+						{{ book.author }}                
+		            </td>
+				</tr>
+	            
+	        {% endfor %}
+        {% endif %}
+
+	  </tbody>
+	</table>
+
+	</div>
+
+</div>
+
+{% endblock %}

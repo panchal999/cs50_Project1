@@ -1,0 +1,118 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    
+    .row {
+		margin: auto;  	 
+ 	}
+
+ 	form{
+ 		margin: 20px;
+ 	}
+
+ 	.center {
+	  display: block;
+	  margin-left: auto;
+	  margin-right: auto;
+	  margin-top: auto;
+	}
+
+	h1{
+		color: white;
+	}
+ 	.i-am-centered { margin: auto; max-width: 850px;}
+
+ 	form > .row{
+ 		margin-top:30px; 
+ 	}
+  </style>
+{% endblock %}
+
+{% block content %}
+    <h1>This is Index PAge</h1>
+    
+    <div class="container">
+    <div class="i-am-centered">
+	    <div class="row p-3 mb-2 bg-dark text-white">
+		    <div class="col-sm-12 col-md-6">
+		    	<div class="center">
+				<img src="../static/images/logo.jpg" class="img-fluid" alt="Responsive image">
+				</div>
+		    </div>
+		    <div class="col-sm-12 col-md-6">
+		    	{% if login_msg %}
+		    		<div class="alert" role="alert">
+  						<p> {{ login_msg }}</p>
+					</div>
+      			{% endif %}
+			{% if is_login %}
+		      <form action="{{ url_for('login') }}" method="post">
+				  <div class="form-group">
+				    <label for="exampleInputEmail1">Email address</label>
+				    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="emailid" placeholder="Enter email">
+				    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputPassword1">Password</label>
+				    <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
+				  </div>
+				  
+				  <div class="row">
+				    
+			       <button type="submit" class="col btn btn-primary" name="action" value="signin">Sign In</button>
+			       
+				    
+				  </div>
+
+
+				</form>
+				<a href="{{ url_for('signup') }}">Not Registered, Sign Up Here</a>
+			{% else %}
+					<form action="{{ url_for('signup') }}" method="post">
+
+					<div class="form-group">
+						<label for="formGroupExampleInput">Name</label>
+						<input type="text"  name="name" class="form-control" id="formGroupExampleInput" placeholder="Name">
+					</div>
+					  	
+
+					<div class="form-group">
+
+					<label for="exampleInputEmail1">Email address</label>
+					<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="emailid" placeholder="Enter email">
+					<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+					</div>
+					<div class="form-group">
+					<label for="exampleInputPassword1">Password</label>
+					<input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
+					
+					<label for="exampleInputPassword1">Confirm Password</label>
+					<input type="password" class="form-control" id="exampleInputPassword2" name="confirm_password" placeholder="Confirm Password">
+
+
+					</div>
+
+					<div class="row">
+
+					<button type="submit" class="col btn btn-primary" name="action" value="signup">Sign Up</button>
+
+
+					</div>
+
+				</form>
+
+
+			{% endif %}
+		    </div>
+		 </div>
+		</div>
+	</div> 
+{% endblock %}
+

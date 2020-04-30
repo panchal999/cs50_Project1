@@ -1,0 +1,139 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    Book Detail
+{% endblock %}
+
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+  	.submit{
+  		margin-top: 10px;
+  		margin-bottom: 10px;
+  	}
+  	table{
+			counter-reset: tableCount;     
+	}
+	.counterCell:before {              
+		content: counter(tableCount); 
+		counter-increment: tableCount; 
+	}
+	.previous {
+  		background-color: #4CAF50;
+  		color: black;
+	}
+	
+
+  </style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+	<div class="row">
+	<div class="col-md-6">
+		<h1>Book Detail</h1>
+		<ul>
+			<li><strong>Book Id:</strong> {{ book.book_id }}</li>
+	        <li><strong>Book Title:</strong> {{ book.title }}</li>
+	        <li><strong>Book ISBN:</strong> {{ book.isbn }}</li>
+	        <li><strong>Book Author:</strong> {{ book.author}} </li>
+	        <li><strong>Publication Year:</strong> {{ book.year}} </li>
+	    </ul>
+    </div>
+    <div class="col-md-6">
+    	<h1>Goodreads Book Detail</h1>
+    	{% if goodreads_info %}
+    	<ul>
+    		<li><strong>Average Rating:</strong>   {{goodreads_info['average_rating']}}</li>
+    		<li><strong>Work Rating Count:</strong>  {{goodreads_info['work_ratings_count']}}</li>
+    	</ul>
+    	{% else %}
+    	<ul>
+    		<li><strong>No Data Found!!</strong></li>
+    	</ul>
+    	{% endif %}
+    </div>
+    </div>
+
+
+<form action="{{ url_for('book', book_id = book.book_id) }}" method="post">
+  <div class="form-row">
+    <div class="col-md-2">
+      <label class="mr-sm-2" for="inlineFormCustomSelect">Review (Out of 5)</label>
+      <select class="custom-select mr-sm-2" name="rating" id="inlineFormCustomSelect">
+        <option selected value="choose">Choose...</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+ 	<div class="col-md-10">
+      <label for="exampleFormControlTextarea1">Review</label>
+	    <textarea type="text" class="form-control" name="review_text" id="exampleFormControlTextarea1" rows="3"> </textarea> 
+	</div>
+</div>
+<div class="form-row submit">
+    
+	<div class="col-md-3 text-left">
+		{% if error_msg %}
+			<div class=" alert-danger" role="alert">
+						<p> {{ error_msg }}</p>
+				</div>
+		{% endif %}
+		{% if sucess_msg %}
+			<div class="alert-success" role="alert">
+						<p> {{ sucess_msg }}</p>
+				</div>
+		{% endif %}
+	</div>
+
+ 	<div class=" col-md-9 text-right">
+      <button type="submit" name="action" value="submit_review" class="btn btn-primary" {{disable}}>Submit</button>
+    </div>
+    <div class="row">
+    	<div class="col">
+    	<a href="{{ url_for('books')}}" class=" btn btn-secondary btn-sm ">&laquo; Search different book</a>
+    	</div>
+    </div>
+</div>
+</form>
+
+
+<table class="table table-hover">
+	  <thead>
+	    <tr>
+	    	<th scope="col">#</th>
+			<th scope="col">Reviews</th>	     
+	    </tr>
+	  </thead>
+	  <tbody>
+	  		{% if reviews %}
+				{% for review in reviews %}
+					<tr>
+						<th class="counterCell"></th>
+						<td>
+							<p><strong>Name: </strong>{{review.name}} &nbsp;&nbsp;&nbsp; <strong>Rating: </strong>{{review.rating}}/5</p>		
+							
+							<p><strong>Review: </strong></strong>{{review.review}}</p>
+			            </td>
+					</tr>
+		            
+		        {% endfor %}
+		    {% endif %}
+	  </tbody>
+	</table>
+
+
+
+
+
+    
+</div>
+
+
+{% endblock %}
