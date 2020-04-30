@@ -14,6 +14,8 @@ Web Programming with Python and JavaScript
 -tables.sql : create queries of tables 
 
 
+#Project Details: https://docs.cs50.net/web/2020/x/projects/1/project1.html
+
 
 #Goodreads API:
 key: 9GUF2T1jJgHkJKcFYsnkg
